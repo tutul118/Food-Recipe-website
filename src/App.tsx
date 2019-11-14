@@ -1,24 +1,78 @@
-import React from 'react';
-import logo from './logo.svg';
+import React , {useEffect ,useState} from 'react';
+import axios from 'axios';
+import Recipe from './components/Recipe';
 import './App.css';
 
+interface Recipe1{
+  recipe :{
+    label: string;
+    calories: number;
+    image: string;
+    ingredients:{
+      text: string;
+    }
+  
+  }
+  
+}
 const App: React.FC = () => {
+
+  const APP_ID: string ='c25c79bd';
+  const APP_KEY: string = ' 08f341ad21bd34f19b4c5503701997c3 ';
+ 
+  const [recipes , setRecipes] = useState<Recipe1[]>([]);
+  const [search , setSearch] = useState('');
+  const [query , setQuery] = useState('chicken')
+
+  useEffect(() => {
+   getRecipes();
+  
+  }, [query]);
+
+
+
+
+  async function getRecipes() {
+    try {
+      const response = await axios.get( `https://api.edamam.com/search?q=${query}&app_id=${APP_ID}&app_key=${APP_KEY}`);
+      const dataOfRecipe = response.data.hits;
+      setRecipes(dataOfRecipe);     
+      console.log(dataOfRecipe);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const updateSearch = (e:any) => {
+    setSearch(e.target.value);
+
+  }
+
+  const getSearch = (e:any) => {
+    e.preventDefault();
+    setQuery(search);
+    setSearch('');
+    
+  }
+  
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form onSubmit={getSearch} className='search-form'>
+        <input  className='search-bar' type='text' value={search} onChange={updateSearch}/>
+        <button className='search-button' type='submit'>Search</button>
+      </form>
+   <div className="recipes">
+   {recipes.map(recipe => (
+        <Recipe key={recipe.recipe.label} title ={recipe.recipe.label} calories= {recipe.recipe.calories}
+        image= {recipe.recipe.image} ingredient= {recipe.recipe.ingredients.text}
+        />
+      ))}
+    
+   </div>
+      
     </div>
   );
 }

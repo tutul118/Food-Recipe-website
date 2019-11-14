@@ -1,22 +1,48 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
+  background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+}
+
+.search-form{
+  min-height: 10vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+}
+
+.search-bar{
+  width: 50%;
+  border: none;
+  padding: 10px;
+}
+
+.search-button{
+  background: lightcoral;
+  border: none;
+  padding: 10px 20px;
   color: white;
 }
 
-.App-link {
-  color: #09d3ac;
+.recipes{
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.recipe-section{
+  border-radius: 10px;
+  box-shadow: 0px 5px 20px rgb(71 ,71 , 71);
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background: white;
+  align-items: center;
+  min-width: 40%;
+}
+
+.images{
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
 }
